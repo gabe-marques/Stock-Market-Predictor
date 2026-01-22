@@ -1,1 +1,38 @@
 # Stock-Market-Predictor
+
+This project implements a long short-term memory (LSTM) neural network to analyze and predict stock prices using historical market data. It is intended for educational and exploratory purposes.
+
+---
+
+## Disclaimer
+
+This project is intended for educational purposes only.
+It is **not financial advice** and should not be used to make real investment decisions.
+
+Stock market predictions are inherently uncertain, and past performance does not guarantee future results.  
+Use this project at your own risk.
+
+---
+
+## Installation
+Steps coming soon!
+
+---
+
+## Features (Current)
+- Loads and visualizes historical stock price data
+
+---
+
+## Planned Features
+- Prepares data for LSTM modeling 
+- Trains a TensorFlow LSTM model
+- Visualizes actual vs predicted prices
+
+---
+
+## Notes
+
+This project follows a guide from https://www.datacamp.com/tutorial/lstm-python-stock-market.
+Built with Python 3.6
+Improvements coming soon!
