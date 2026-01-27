@@ -34,5 +34,7 @@ Steps coming soon!
 ## Notes
 
 This project follows a guide from https://www.datacamp.com/tutorial/lstm-python-stock-market.
-Built with Python 3.6
+
+This project modernizes an LSTM stock prediction tutorial originally written for TensorFlow 1.6 by refactoring it to TensorFlow 2.x and Keras APIs. Built using Python 3.10.
+
 Improvements coming soon!
