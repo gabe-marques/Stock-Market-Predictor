@@ -6,6 +6,7 @@ import numpy as np
 import tensorflow as tf
 
 from src.data_loader import get_prices, prepare_dataset
+from src.model import build_lstm_model
 
 def load_config(path: str|Path):
     path = Path(path)
@@ -25,6 +26,10 @@ def main(config_path: str) -> None:
     # Model configs
     train_split = configs['model']['train_split']
     lookback = configs['model']['lookback']
+    units1 = configs['model']['units1']
+    units2 = configs['model']['units2']
+    dropout = configs['model']['dropout']
+    learning_rate = configs['model']['learning_rate']
 
     # Training configs
     epochs = configs['training']['epochs']
@@ -41,5 +46,3 @@ if __name__ == '__main__':
     parser.add_argument('--config', default='configs/config.json', help='Path to JSON config.')
     args = parser.parse_args()
     main(args.config)
-    # run with
-    # python -m src.train

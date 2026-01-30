@@ -28,9 +28,22 @@ Stock prices are sequential time-series data, peferct for recurrent neural netwo
 
 ---
 
+## Model Arhictecture
+
+The model consists of:
+
+- Two stacked LSTM layers
+- Dropout regularization to reduce overfitting 
+- A fully connected output layer for price prediction
+
+The model is trained using the Adam optimizer and Mean Squared Error (MSE) loss.
+
+---
+
 ## Project Structure
 
-.
+```text
+project/
 ├── configs/
 │   └── config.json          # Data, model, and training configuration
 ├── src/
@@ -42,20 +55,45 @@ Stock prices are sequential time-series data, peferct for recurrent neural netwo
 
 ---
 
+## Configuration
+
+Project parameters are stored in a JSON config file (`configs/config.json`), including:
+
+- Stock ticker
+- Date range
+- Lookback window size
+- Train/test split
+- Training hyperparameters
+
+This allows experiments to be run without modifying source code
+
+---
+
 ## Installation
-Steps coming soon!
+
+Requirements:
+
+- Python 3.10
+- Tensorflow >= 2.10
+
+Install dependencies:
+
+`pip install -r requirements.txt`
+
+Run Training:
+
+`python -m src.train --config configs/config.json`
 
 ---
 
-## Features (Current)
-- Loads and visualizes historical stock price data
+## Future Improvements
 
----
+Possible extensions include:
 
-## Planned Features
-- Prepares data for LSTM modeling 
-- Trains a TensorFlow LSTM model
-- Visualizes actual vs predicted prices
+- Predicting returns or direction instead of prices
+- Adding technical indicators to improve predictions (RSI, MACD)
+- Multi-stock training
+- Hyperparameter tuning
 
 ---
 
