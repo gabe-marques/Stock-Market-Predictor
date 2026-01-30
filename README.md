@@ -52,6 +52,7 @@ project/
 │   └── train.py             # Training and evaluation script
 ├── requirements.txt
 └── README.md
+```
 
 ---
 
