@@ -13,7 +13,7 @@ def build_lstm_model(lookback:  int, units1: int, units2: int, dropout: float, l
         ]
     )
     model.compile(
-        optimizer=tf.keras.Adam(learning_rate=learning_rate),
+        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
         loss="mse"
     )
     return model

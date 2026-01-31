@@ -1,9 +1,13 @@
 import json
 from pathlib import Path
 import argparse
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' # Hide info and warning messages
 
 import numpy as np
 import tensorflow as tf
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 from src.data_loader import get_prices, prepare_dataset
 from src.model import build_lstm_model
@@ -34,12 +38,52 @@ def main(config_path: str) -> None:
     # Training configs
     epochs = configs['training']['epochs']
     batch_size = configs['training']['batch_size']
+    patience = configs['training']['early_stopping_patience']
+    val_split = configs['training']['validation_split']
 
     print(f'Configs successfully loaded from {config_path}!')
 
     # Set seed for reproducibility 
     np.random.seed(42)
     tf.random.set_seed(42)
+
+    # Load data
+    prices = get_prices(ticker, start_date, end_date)
+    input_data = prepare_dataset(prices, lookback, train_split)
+
+    # Build model 
+    model = build_lstm_model(lookback, units1, units2, dropout, learning_rate)
+    print(model.summary())
+
+    # Train model
+    early_stop = tf.keras.callbacks.EarlyStopping(
+        monitor='val_loss',
+        patience=patience,
+        restore_best_weights=True
+    )
+
+    history = model.fit(
+        input_data.X_train,
+        input_data.y_train,
+        validation_split=val_split,
+        epochs=epochs,
+        batch_size=batch_size,
+        callbacks=[early_stop],
+        verbose=1,
+    )
+
+    # Predict
+    y_pred_scaled = model.predict(input_data.X_test, verbose=0)
+    y_test_inv = input_data.scaler.inverse_transform(input_data.y_test)
+    y_pred_inv = input_data.scaler.inverse_transform(y_pred_scaled)
+
+    # Metrics
+    rmse = float(np.sqrt(mean_squared_error(y_test_inv, y_pred_inv)))
+    mae = float(mean_absolute_error(y_test_inv, y_pred_inv))
+    print('\nMetrics:')
+    print(f'Ticker: {ticker}')
+    print(f'RMSE: {rmse:.4f}')
+    print(f'MAE : {mae:.4f}')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
