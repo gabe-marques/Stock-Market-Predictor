@@ -17,5 +17,8 @@
         "batch_size": 32,
         "early_stopping_patience": 5,
         "validation_split": 0.1
+    },
+    "output":{
+        "folder_dir": "outputs"
     }
 }
