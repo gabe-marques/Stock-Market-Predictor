@@ -13,7 +13,7 @@ It is **not financial advice** and should not be used to make real investment de
 
 Stock market predictions are inherently uncertain, and past performance does not guarantee future results. 
 
-Use this project at your own risk.
+This model predicts prices, not trading signals. The model does not take into account external factors such as news. Thus, results should **NOT** be used for financial decision-making.
 
 ---
 
@@ -37,6 +37,26 @@ The model consists of:
 - A fully connected output layer for price prediction
 
 The model is trained using the Adam optimizer and Mean Squared Error (MSE) loss.
+
+---
+
+## Data Processing Pipeline
+
+1. Data Collection
+- Historical stock prices are downloaded using `yfinance`
+- Only the Close price is used for modeling 
+
+2. Train/Test Split
+- The dataset is split chronologically (80% train, 20% test)
+- No shuffling is performed to preserve temporal order 
+
+3. Normalization
+- A `MinMaxScaler` is fit only on training data
+- Test data is transformed using the same scaler to avoid data leakage
+
+4. Sequence Generation
+- Sliding window of fixed length (default: 60 days)
+- Each window predicts the next closing price
 
 ---
 
@@ -87,6 +107,26 @@ Run Training:
 
 ---
 
+## Evaluation Metrics
+
+Model performance is evaluated using:
+- RMSE (Root Mean Squared Error)
+- MAE (Mean Absolute Error)
+
+Theese metrics measure how closely predicted prices match actual prices on the test set.
+
+---
+
+## Visualization
+
+The final output includes a plot comparing:
+- Actual closing prices
+- LSTM-predicted prices
+
+This provides a qualitative view of how well the model captures overall trends.
+
+---
+
 ## Future Improvements
 
 Possible extensions include:
@@ -100,8 +140,8 @@ Possible extensions include:
 
 ## Notes
 
-This project follows a guide from https://www.datacamp.com/tutorial/lstm-python-stock-market.
-
 This project modernizes an LSTM stock prediction tutorial originally written for TensorFlow 1.6 by refactoring it to TensorFlow 2.x and Keras APIs. Built using Python 3.10.
+
+Original DataCamp LSTM stock market tutorial (TensorFlow 1.6) https://www.datacamp.com/tutorial/lstm-python-stock-market.
 
 Improvements coming soon!
